@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>知识点归档目录 · 三个压缩包</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='7' width='24' height='19' rx='3' fill='%231B4332'/%3E%3Cpath d='M10 13h12M10 17h12M10 21h8' stroke='%23E8EFE9' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --paper:#F5F7F3;
+  --ink:#1C2B24;
+  --deep:#16382C;
+  --deep2:#1E4636;
+  --accent:#2D6A4F;
+  --accent-soft:#DCE8DE;
+  --line:#D6DED6;
+  --muted:#5C6E64;
+  --chip:#E9F0E9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans SC",system-ui,"Microsoft YaHei",sans-serif;
+  background:var(--paper);color:var(--ink);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+/* ===== hero ===== */
+.hero{
+  background:linear-gradient(160deg,var(--deep) 0%,var(--deep2) 100%);
+  color:#EAF1EB;padding:56px 24px 44px;
+  border-bottom:1px solid #0F2A20;
+}
+.hero-inner{max-width:1080px;margin:0 auto}
+.kicker{
+  font-size:12px;letter-spacing:.18em;color:#9FC0AE;
+  margin-bottom:14px;font-weight:500;
+}
+h1{
+  font-family:"Noto Serif SC",serif;
+  font-size:clamp(30px,4.6vw,46px);font-weight:900;
+  line-height:1.18;letter-spacing:.02em;
+}
+.lede{margin-top:12px;color:#C8D9CE;font-weight:300;font-size:15px}
+.stats{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;
+}
+.stat{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:8px;padding:10px 16px;
+}
+.stat b{display:block;font-family:"Noto Serif SC",serif;font-size:20px;font-weight:700;color:#fff}
+.stat span{font-size:12px;color:#A9C4B5}
+.search{
+  margin-top:24px;max-width:560px;position:relative;
+}
+.search svg{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:17px;height:17px;stroke:#7E9488;fill:none;stroke-width:2;
+}
+#q{
+  width:100%;padding:13px 16px 13px 42px;
+  border:1px solid rgba(255,255,255,.22);border-radius:8px;
+  background:rgba(255,255,255,.10);color:#fff;
+  font-size:15px;font-family:inherit;outline:none;
+}
+#q::placeholder{color:#9FB8AA}
+#q:focus{border-color:#7FC39A;background:rgba(255,255,255,.16)}
+.search-hint{font-size:12px;color:#9FB8AA;margin-top:8px;min-height:18px}
+/* ===== main ===== */
+main{max-width:1080px;margin:0 auto;padding:36px 24px 60px}
+.pack{margin-bottom:48px}
+.pack-head{
+  display:flex;align-items:baseline;gap:16px;
+  padding-bottom:14px;border-bottom:2px solid var(--deep);
+  margin-bottom:18px;
+}
+.pack-no{
+  font-family:"Noto Serif SC",serif;font-size:26px;font-weight:900;
+  color:var(--accent);flex:none;
+}
+.pack-meta h2{font-size:20px;font-weight:700;letter-spacing:.01em}
+.pack-meta p{font-size:13px;color:var(--muted);margin-top:2px}
+/* 学科卡片 */
+.subjects{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.subject{
+  background:#fff;border:1px solid var(--line);
+  border-radius:8px;overflow:hidden;
+}
+.subject-head{
+  width:100%;display:flex;align-items:center;gap:10px;
+  background:none;border:none;cursor:pointer;
+  padding:12px 14px;text-align:left;font-family:inherit;
+  color:var(--ink);
+}
+.subject-head:hover{background:var(--chip)}
+.s-name{font-size:15px;font-weight:700;flex:none}
+.s-meta{margin-left:auto;font-size:12px;color:var(--muted);flex:none}
+.chev{
+  width:13px;height:13px;flex:none;stroke:var(--muted);
+  fill:none;stroke-width:2;transition:transform .18s ease;
+}
+.subject.open .chev{transform:rotate(90deg)}
+.files{list-style:none;border-top:1px solid var(--line);display:none}
+.subject.open .files{display:block}
+.file{
+  display:flex;align-items:baseline;gap:12px;
+  padding:8px 14px;font-size:13.5px;
+  border-top:1px solid #EEF2EE;
+}
+.file:first-child{border-top:none}
+.file:hover{background:#F4F8F3}
+.f-name{color:var(--ink);word-break:break-all}
+.f-size{margin-left:auto;color:var(--muted);font-size:12px;flex:none}
+/* 搜索态 */
+.subjects.filtering .subject.hidden,.pack.hidden{display:none}
+.file.hidden{display:none}
+.empty-note{display:none;color:var(--muted);font-size:13px;padding:16px 4px}
+body.searching .empty-note{display:block}
+/* footer */
+footer{
+  max-width:1080px;margin:0 auto;padding:22px 24px 40px;
+  color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);
+}
+/* ===== 响应式 ===== */
+@media (max-width:760px){
+  .hero{padding:40px 18px 34px}
+  main{padding:26px 16px 44px}
+  .subjects{grid-template-columns:1fr}
+  .pack-no{font-size:22px}
+  .pack-meta h2{font-size:17px}
+  .stat b{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .chev{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="kicker">大学知识点归档 · 2026</p>
+    <h1>知识点归档目录</h1>
+    <p class="lede">三个压缩包，按学科分装整理。搜索或展开学科，快速定位任意一份资料。</p>
+    <div class="stats" id="stats"></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="q" type="text" placeholder="搜索文件名或学科，如：遗传学、2016、试卷…" autocomplete="off">
+      <p class="search-hint" id="hint"></p>
+    </div>
+  </div>
+</header>
+
+<main id="main"></main>
+
+<footer>
+  <p>本页为 <b>知识点归档-01.zip</b>、<b>知识点归档-02.zip</b>、<b>知识点归档-03.zip</b> 三个压缩包的目录索引，文件名与大小均取自压缩包实际内容。压缩包内文件均按「年份-学科-描述性文件名」规范命名。</p>
+</footer>
+
+<script>
+const DATA = {"packs":[{"tag":"01","file":"知识点归档-01.zip","count":48,"size":692624776,"subjects":[{"name":"创新创业","count":1,"size":937363,"files":[{"name":"2026-创新创业-题库274T.pdf","size":937363}]},{"name":"动物学","count":4,"size":3976599,"files":[{"name":"2026-动物学-期中复习资料完整版.doc","size":69015},{"name":"2026-动物学-期末总结.doc","size":3705856},{"name":"2026-动物学-期末试卷.doc","size":52224},{"name":"2026-动物学-题库.doc","size":149504}]},{"name":"学术英语","count":3,"size":36750390,"files":[{"name":"2026-学术英语-主观题答题注意事项.pdf","size":3313887},{"name":"2026-学术英语-文献英语复习导图.pdf","size":411190},{"name":"2026-学术英语-考试复习总结.pdf","size":33025313}]},{"name":"家畜环境卫生学","count":1,"size":7651381,"files":[{"name":"2026-家畜环境卫生学-整理.pdf","size":7651381}]},{"name":"户外拓展","count":1,"size":26814,"files":[{"name":"2026-户外拓展-选题库.docx","size":26814}]},{"name":"有机化学","count":13,"size":537156446,"files":[{"name":"2026-有机化学-习题册答案.pdf","size":3016502},{"name":"2026-有机化学-习题册阶段三之前答案.pdf","size":99720990},{"name":"2026-有机化学-复习提纲.pdf","size":407985},{"name":"2026-有机化学-大一下资料.zip","size":282567140},{"name":"2026-有机化学-新版习题册答案全.pdf","size":10010812},{"name":"2026-有机化学-知识点1.pdf","size":128868},{"name":"2026-有机化学-知识点2.pdf","size":275014},{"name":"2026-有机化学-知识点3.pdf","size":456280},{"name":"2026-有机化学-知识点4.pdf","size":444236},{"name":"2026-有机化学-知识点5.pdf","size":87222},{"name":"2026-有机化学-笔记.pdf","size":4751933},{"name":"2026-有机化学-课程重难点.pdf","size":304829},{"name":"2026-有机化学-资源.zip","size":134984635}]},{"name":"植物病理学","count":3,"size":41683,"files":[{"name":"2026-植物病理学-名词解释.docx","size":13911},{"name":"2026-植物病理学-填空.docx","size":14336},{"name":"2026-植物病理学-大题.docx","size":13436}]},{"name":"物理","count":9,"size":24068512,"files":[{"name":"2026-物理-大一上期末划重点.docx","size":131526},{"name":"2026-物理-小组展示.pptx","size":1419151},{"name":"2026-物理-模拟试卷.doc","size":248832},{"name":"2026-物理-模拟试卷一答案.pdf","size":143833},{"name":"2026-物理-物理学2020年试卷.pdf","size":5538996},{"name":"2026-物理-物理学AB试卷汇总.pdf","size":5538057},{"name":"2026-物理-物理学第4版习题解答第7章正弦交流电路.pdf","size":411192},{"name":"2026-物理-物理学资料.zip","size":9820037},{"name":"2026-物理-物理学资料小包.zip","size":816888}]},{"name":"考研高数","count":2,"size":111045,"files":[{"name":"2026-考研高数-易错点1.docx","size":46452},{"name":"2026-考研高数-高安泽.docx","size":64593}]},{"name":"英语文学","count":1,"size":11201646,"files":[{"name":"2026-英语文学-赏析资料.zip","size":11201646}]},{"name":"近代史","count":8,"size":2241952,"files":[{"name":"2026-近代史-纲要复习提纲及答案.doc","size":69632},{"name":"2026-近代史-纲要复习资料.doc","size":57856},{"name":"2026-近代史-纲要复习资料.pdf","size":258614},{"name":"2026-近代史-纲要复习资料选择题.docx","size":29984},{"name":"2026-近代史-纲要复习题目.doc","size":60416},{"name":"2026-近代史-纲要完美版.pdf","size":751925},{"name":"2026-近代史-纲要课后习题答案2016.pdf","size":942357},{"name":"2026-近代史-课后习题答案2023完整版.doc","size":71168}]},{"name":"金工实习","count":2,"size":68452591,"files":[{"name":"2026-金工实习-数控铣软件安装教程.rar","size":61079133},{"name":"2026-金工实习-答案.rar","size":7373458}]}]},{"tag":"02","file":"知识点归档-02.zip","count":125,"size":692744137,"subjects":[{"name":"体育","count":11,"size":5113769,"files":[{"name":"2026-体育-乒乓球理论.docx","size":26890},{"name":"2026-体育-体育舞蹈理论.doc","size":4230656},{"name":"2026-体育-健身塑形题库.docx","size":29386},{"name":"2026-体育-定向越野理论.docx","size":17098},{"name":"2026-体育-排球理论试题库.doc","size":149504},{"name":"2026-体育-瑜伽理论.doc","size":61440},{"name":"2026-体育-羽毛球理论.docx","size":31789},{"name":"2026-体育-舞龙题库1.docx","size":35941},{"name":"2026-体育-舞龙题库2.doc","size":30720},{"name":"2026-体育-足球理论.docx","size":25721},{"name":"2026-体育-跆拳道理论.doc","size":474624}]},{"name":"作物学","count":10,"size":3425405,"files":[{"name":"2026-作物学-2016年试题A答案.pdf","size":288532},{"name":"2026-作物学-2017年试题A答案.pdf","size":281757},{"name":"2026-作物学-2018年试题A答案.pdf","size":282124},{"name":"2026-作物学-2019年试题A.doc","size":58880},{"name":"2026-作物学-2022至2023学年第一学期R-A卷.pdf","size":153691},{"name":"2026-作物学-六章重点.wps","size":16896},{"name":"2026-作物学-名词解释.pdf","size":400102},{"name":"2026-作物学-模拟卷汇总.docx","size":32644},{"name":"2026-作物学-选择题库.pdf","size":1851379},{"name":"2026-作物学-题库.docx","size":59400}]},{"name":"军事理论","count":10,"size":9975296,"files":[{"name":"2026-军事理论-2017至2018年重点.docx","size":21633},{"name":"2026-军事理论-2022年真题.pdf","size":562560},{"name":"2026-军事理论-2025提纲3.0.pdf","size":409326},{"name":"2026-军事理论-作业答案.docx","size":75864},{"name":"2026-军事理论-军理复习资料.pdf","size":7683480},{"name":"2026-军事理论-完整题库.doc","size":337408},{"name":"2026-军事理论-练习题.doc","size":27648},{"name":"2026-军事理论-课后习题汇总.docx","size":27140},{"name":"2026-军事理论-课后答案.doc","size":764928},{"name":"2026-军事理论-选择题题库.docx","size":65309}]},{"name":"化学","count":32,"size":122996344,"files":[{"name":"2026-化学-2006年无机分析试卷.doc","size":80384},{"name":"2026-化学-实验化学一资料.zip","size":682963},{"name":"2026-化学-实验化学思考题.pdf","size":1293865},{"name":"2026-化学-实验化学测验1试卷及答案.doc","size":223232},{"name":"2026-化学-无机化学2020年试卷.pdf","size":4050787},{"name":"2026-化学-无机化学知识点.pdf","size":738594},{"name":"2026-化学-无机化学知识点及2016年前真题.pdf","size":3903445},{"name":"2026-化学-无机化学知识点总结.doc","size":1095680},{"name":"2026-化学-无机化学第六第七章复习.pptx","size":4670110},{"name":"2026-化学-无机化学资料.zip","size":42082936},{"name":"2026-化学-无机及分析化学2008年B卷.doc","size":63488},{"name":"2026-化学-无机及分析化学复习知识点大一要点.docx","size":194676},{"name":"2026-化学-无机及分析化学重点题1.docx","size":1422897},{"name":"2026-化学-有机化学2020年试卷.pdf","size":8860580},{"name":"2026-化学-有机化学崔海燕老师课件PDF.pdf","size":4537259},{"name":"2026-化学-第七章沉淀溶解平衡与沉淀滴定法课件.pptx","size":754578},{"name":"2026-化学-第三章化学反应速率课件.ppt","size":3293696},{"name":"2026-化学-第三章化学反应速率课件.pptx","size":1200582},{"name":"2026-化学-第九章氧化还原反应与氧化还原滴定法课件.pptx","size":1848706},{"name":"2026-化学-第二章化学热力学基础笔记图.png","size":34889},{"name":"2026-化学-第二章化学热力学基础课件.docx","size":3673077},{"name":"2026-化学-第二章化学热力学基础课件.pdf","size":2459375},{"name":"2026-化学-第二章化学热力学基础课件.ppt","size":4042240},{"name":"2026-化学-第二章化学热力学基础课件.pptx","size":1489011},{"name":"2026-化学-第五章分析化学概论课件.pptx","size":1173092},{"name":"2026-化学-第八章配位化合物与配位滴定法课件.pptx","size":3107978},{"name":"2026-化学-第六章酸碱平衡与酸碱滴定法课件.pptx","size":1917836},{"name":"2026-化学-第十二章有机含氮化合物课件.pdf","size":756155},{"name":"2026-化学-第四章物质结构简介II课件.ppt","size":4645888},{"name":"2026-化学-第四章物质结构简介I课件.ppt","size":7334912},{"name":"2026-化学-第四章物质结构简介课件.pptx","size":11327651},{"name":"2026-化学-配位化学Cu²⁺笔记.docx","size":35782}]},{"name":"微生物","count":1,"size":1406753,"files":[{"name":"2026-微生物-2024重点.pdf","size":1406753}]},{"name":"微积分","count":19,"size":78827510,"files":[{"name":"2026-微积分-16-17年C卷A卷答案.doc","size":268288},{"name":"2026-微积分-16-17年C卷试卷A.doc","size":168448},{"name":"2026-微积分-17-18年IC卷试卷A及答案.doc","size":343040},{"name":"2026-微积分-19-20年C卷A卷答案.doc","size":168960},{"name":"2026-微积分-20-21年IC卷A卷答案.pdf","size":483676},{"name":"2026-微积分-20-21年IC卷试卷A.pdf","size":194307},{"name":"2026-微积分-2016至2017年试题.pdf","size":252172},{"name":"2026-微积分-2017年期末复习资料.pdf","size":1500944},{"name":"2026-微积分-2020年大农类试卷.pdf","size":3328510},{"name":"2026-微积分-2020至2021年试卷.pdf","size":67797},{"name":"2026-微积分-21-22年IC模拟答案.doc","size":256512},{"name":"2026-微积分-21-22年IC模拟试卷.doc","size":203776},{"name":"2026-微积分-IC资料合集.zip","size":67067656},{"name":"2026-微积分-升级版自学讲义微积分锻造术.docx","size":43026},{"name":"2026-微积分-升级版自学讲义微积分锻造术.pdf","size":880061},{"name":"2026-微积分-牛顿莱布尼茨公式课件.ppt","size":794112},{"name":"2026-高数-2017年习题册.pdf","size":2194424},{"name":"2026-高数-不定积分例题思路与答案超全.pdf","size":570572},{"name":"2026-高数-极限易错点题目分类.docx","size":41229}]},{"name":"概率论","count":8,"size":295512340,"files":[{"name":"2026-概率论-2008至2017年试卷合集.pdf","size":7823765},{"name":"2026-概率论-2019年试卷.pdf","size":3473224},{"name":"2026-概率论-2020至2021年试卷.pdf","size":1468818},{"name":"2026-概率论-复习资料.pdf","size":452633},{"name":"2026-概率论-概念和公式大全.pdf","size":509346},{"name":"2026-概率论-概率论B真题笔记习题册.zip","size":225335624},{"name":"2026-概率论-笔记.pdf","size":55484660},{"name":"2026-概率论-练习题2020.pdf","size":964270}]},{"name":"线性代数","count":14,"size":26769667,"files":[{"name":"2026-线性代数-2018至2021试卷合集.rar","size":2755684},{"name":"2026-线性代数-2019年线性代数B试卷A.pdf","size":427103},{"name":"2026-线性代数-2019年线性代数B试卷A答案.pdf","size":478486},{"name":"2026-线性代数-2021年线性代数B试卷A.pdf","size":452027},{"name":"2026-线性代数-2021年线性代数B试卷A答案.pdf","size":488233},{"name":"2026-线性代数-2021年试卷.pdf","size":2982746},{"name":"2026-线性代数-2023试卷带答案.pdf","size":10026613},{"name":"2026-线性代数-2024试卷A.pdf","size":263526},{"name":"2026-线性代数-2024试卷A答案.pdf","size":546407},{"name":"2026-线性代数-2025试卷A.pdf","size":245884},{"name":"2026-线性代数-2025试卷A答案.pdf","size":506329},{"name":"2026-线性代数-二级结论.pdf","size":387622},{"name":"2026-线性代数-套路.pdf","size":3053231},{"name":"2026-线性代数-考试题目分类整理.pdf","size":4155776}]},{"name":"通识","count":1,"size":19564069,"files":[{"name":"2026-通识-南农重大科技成就.pptx","size":19564069}]},{"name":"逻辑学","count":1,"size":52270009,"files":[{"name":"2026-逻辑学-教材OCR.pdf","size":52270009}]},{"name":"遗传学","count":18,"size":76860169,"files":[{"name":"2026-遗传学-减数分裂课件.ppt","size":3509248},{"name":"2026-遗传学-复习资料.pdf","size":1314103},{"name":"2026-遗传学-实验3果蝇杂交实验2024.ppt","size":2614784},{"name":"2026-遗传学-实验4果蝇唾腺染色体观察2024.ppt","size":6760448},{"name":"2026-遗传学-实验5果蝇杂交计数2024.ppt","size":4114432},{"name":"2026-遗传学-有丝分裂课件2024.ppt","size":4684288},{"name":"2026-遗传学-第一章绪论课件2024.pptx","size":5208425},{"name":"2026-遗传学-第七章细菌和病毒的遗传课件2024.pptx","size":3760009},{"name":"2026-遗传学-第三章遗传物质的分子基础课件.pptx","size":4034558},{"name":"2026-遗传学-第九章基因工程与基因组学课件2024.pptx","size":9277095},{"name":"2026-遗传学-第二章遗传的细胞学基础课件2024.ppt","size":3535360},{"name":"2026-遗传学-第五章连锁遗传和性连锁课件2024.pptx","size":2769603},{"name":"2026-遗传学-第八章基因表达与调控课件2024.pptx","size":478126},{"name":"2026-遗传学-第六章染色体变异课件.pptx","size":11138693},{"name":"2026-遗传学-第十一章细胞质遗传课件2024简版.pptx","size":3357977},{"name":"2026-遗传学-第十三章数量遗传课件2024简版.pptx","size":714102},{"name":"2026-遗传学-第十四章群体遗传与进化课件2024.pptx","size":148662},{"name":"2026-遗传学-第四章孟德尔遗传课件.ppt","size":9440256}]}]},{"tag":"03","file":"知识点归档-03.zip","count":102,"size":692636477,"subjects":[{"name":"Python","count":15,"size":72297715,"files":[{"name":"2026-python-2022秋A1卷答案.docx","size":39919},{"name":"2026-python-2023年真题.pdf","size":2325995},{"name":"2026-python-2024年真题.pdf","size":5160445},{"name":"2026-python-Python从入门到精通背记手册.pdf","size":19677419},{"name":"2026-python-习题有答案.docx","size":51172},{"name":"2026-python-基础练习题100道.pdf","size":305200},{"name":"2026-python-复习资料.zip","size":16834625},{"name":"2026-python-技巧.pdf","size":485249},{"name":"2026-python-期末复习注意点.docx","size":1170800},{"name":"2026-python-核心笔记.pdf","size":804552},{"name":"2026-python-知识点.pdf","size":692741},{"name":"2026-python-知识点笔记.pdf","size":21208230},{"name":"2026-python-程序设计习题与答案.docx","size":48720},{"name":"2026-python-近几年真题.pdf","size":3089490},{"name":"2026-python-题库白皮书电子题库.docx","size":403158}]},{"name":"信息技术","count":3,"size":8012037,"files":[{"name":"2026-信息技术-2016年习题册.pdf","size":3748165},{"name":"2026-信息技术-2016年习题册答案.pdf","size":347158},{"name":"2026-信息技术-题库与试卷附答案.pdf","size":3916714}]},{"name":"其他","count":1,"size":206336,"files":[{"name":"2026-其他-课件课堂练习答案.doc","size":206336}]},{"name":"动物组织胚胎学","count":3,"size":25127523,"files":[{"name":"2026-动物组织胚胎学-英文资料.pdf","size":1328436},{"name":"2026-动物组织胚胎学-识图题.doc","size":19142144},{"name":"2026-动物组织胚胎学-资料1.pdf","size":4656943}]},{"name":"商务英语","count":1,"size":18147,"files":[{"name":"2026-商务英语-词汇unit5.docx","size":18147}]},{"name":"土壤学","count":26,"size":46782308,"files":[{"name":"2026-土壤学-2021年土壤肥料学课程截图1.jpg","size":214381},{"name":"2026-土壤学-2021年土壤肥料学课程截图2.jpg","size":215974},{"name":"2026-土壤学-2021年土壤肥料学课程截图3.jpg","size":208327},{"name":"2026-土壤学-2021年土壤肥料学课程截图4.jpg","size":209297},{"name":"2026-土壤学-2021年土壤肥料学课程截图5.jpg","size":213681},{"name":"2026-土壤学-2021年土壤肥料学课程截图6.jpg","size":220594},{"name":"2026-土壤学-2021年土壤肥料学课程截图7.jpg","size":215218},{"name":"2026-土壤学-2021年土壤肥料学课程截图8.jpg","size":215822},{"name":"2026-土壤学-2021年土壤肥料学课程截图9.jpg","size":213469},{"name":"2026-土壤学-土壤肥料学实验.pdf","size":1102300},{"name":"2026-土壤学-土壤肥料学实验土壤部分.pdf","size":2383717},{"name":"2026-土壤学-课件照片1.1.jpg","size":4145364},{"name":"2026-土壤学-课件照片1.2.jpg","size":3210196},{"name":"2026-土壤学-课件照片1.3.jpg","size":1321690},{"name":"2026-土壤学-课件照片1.4.jpg","size":1412444},{"name":"2026-土壤学-课件照片2.1.jpg","size":2158833},{"name":"2026-土壤学-课件照片2.10.jpg","size":2609537},{"name":"2026-土壤学-课件照片2.2.jpg","size":5085141},{"name":"2026-土壤学-课件照片2.3.jpg","size":1718155},{"name":"2026-土壤学-课件照片2.4.jpg","size":2566280},{"name":"2026-土壤学-课件照片2.5.jpg","size":4081554},{"name":"2026-土壤学-课件照片2.6.jpg","size":4715114},{"name":"2026-土壤学-课件照片2.7.jpg","size":2063883},{"name":"2026-土壤学-课件照片2.8.jpg","size":4702911},{"name":"2026-土壤学-课件照片2.9.jpg","size":1370336},{"name":"2026-土壤学-课件照片3.1.jpg","size":208090}]},{"name":"安全知识","count":2,"size":275295,"files":[{"name":"2026-安全知识-竞赛题库.xlsx","size":130715},{"name":"2026-安全知识-竞赛题库副本.xlsx","size":144580}]},{"name":"形势与政策","count":2,"size":15223957,"files":[{"name":"2026-形势与政策-2023秋季园艺学院课程与考核.pptx","size":12269295},{"name":"2026-形势与政策-2024春资料.zip","size":2954662}]},{"name":"思修","count":14,"size":4061443,"files":[{"name":"2026-思修-2018年期末复习知识点.docx","size":31781},{"name":"2026-思修-2019年期末复习知识点.pdf","size":462564},{"name":"2026-思修-复习资料.docx","size":44855},{"name":"2026-思修-复习资料.pdf","size":3291222},{"name":"2026-思修-期末考试试题.docx","size":23346},{"name":"2026-思修-第一章知识点及练习题.docx","size":24379},{"name":"2026-思修-第三章知识点及练习题.docx","size":20763},{"name":"2026-思修-第二章知识点及练习题.docx","size":20882},{"name":"2026-思修-第四章知识点及练习题.docx","size":18776},{"name":"2026-思修-绪论知识点及练习题.docx","size":19159},{"name":"2026-思政-改革开放史.docx","size":21412},{"name":"2026-思政-新中国史答案.docx","size":35667},{"name":"2026-思政-期末重点.docx","size":26866},{"name":"2026-思政-社会主义发展史答案.docx","size":19771}]},{"name":"机械","count":8,"size":247353436,"files":[{"name":"2026-机械-工程制图习题集合并版.pptx","size":16955705},{"name":"2026-机械-工程制图习题集未合并版.pptx","size":16974595},{"name":"2026-机械-工程制图习题集答案第八版.pdf","size":42179973},{"name":"2026-机械-工程制图第三章第四章答案.pdf","size":2984056},{"name":"2026-机械-机械制图习题集解答.pdf","size":102839380},{"name":"2026-机械-机械基础真题.pdf","size":42005437},{"name":"2026-机械-机械基础背诵.docx","size":2842659},{"name":"2026-机械-机械基础背诵.pdf","size":20571631}]},{"name":"植物学","count":7,"size":153685715,"files":[{"name":"2026-植物学-2020年试题.doc","size":252416},{"name":"2026-植物学-2021年资料.pdf","size":33260060},{"name":"2026-植物学-染色体分析虚拟仿真软件用户手册.docx","size":12512300},{"name":"2026-植物学-植物学2.docx","size":215187},{"name":"2026-植物学-植物学Ⅱ2019年试题.docx","size":106158},{"name":"2026-植物学-植物学笔记2学期自整理.pdf","size":7868735},{"name":"2026-植物学-植物生理学.pdf","size":99470859}]},{"name":"植物营养","count":10,"size":116067280,"files":[{"name":"2026-植物营养-植物营养与施肥复习.pdf","size":32291497},{"name":"2026-植物营养-第七章氮素营养及化学氮肥课件.pdf","size":11586009},{"name":"2026-植物营养-第九章中量元素营养及中量肥料课件.pdf","size":7834292},{"name":"2026-植物营养-第九章微量元素营养及微量元素肥料课件.pdf","size":10677614},{"name":"2026-植物营养-第八章磷钾素营养及磷钾肥课件之一.pdf","size":7464821},{"name":"2026-植物营养-第八章磷钾素营养及磷钾肥课件之二.pdf","size":9991413},{"name":"2026-植物营养-第六章植物营养与施肥原理课件之一.pdf","size":11051747},{"name":"2026-植物营养-第六章植物营养与施肥原理课件之二.pdf","size":7736890},{"name":"2026-植物营养-第十一章有机类肥料课件.pdf","size":12497433},{"name":"2026-植物营养-第十章复混肥料课件.pdf","size":4935564}]},{"name":"美学","count":1,"size":47616,"files":[{"name":"2026-美学-美学课.doc","size":47616}]},{"name":"英语四级","count":2,"size":339542,"files":[{"name":"2026-英语四级-2025年12月参考答案.docx","size":50319},{"name":"2026-英语四级-2025年6月考季模考答案速查.pdf","size":289223}]},{"name":"食品导论","count":1,"size":38279,"files":[{"name":"2025-食品导论-营养.docx","size":38279}]},{"name":"马原","count":6,"size":3081486,"files":[{"name":"2026-马原-南农2024真题.docx","size":16201},{"name":"2026-马原-南农2024真题答案.docx","size":15819},{"name":"2026-马原-基本原理复习.pdf","size":296908},{"name":"2026-马原-毛概分组食工类2504班.xlsx","size":9792},{"name":"2026-马原-毛概客观题.pdf","size":2732744},{"name":"2026-马原-食工类2504班分组.xlsx","size":10022}]}]}],"total_files":275,"total_size":2078005390};
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function fmtMB(b){
+  if (b >= 1048576) return (b/1048576).toFixed(1) + ' MB';
+  if (b >= 1024) return Math.round(b/1024) + ' KB';
+  return b + ' B';
+}
+const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+
+// 统计条
+(function(){
+  const el = document.getElementById('stats');
+  const tot = DATA.total_size;
+  const subjCount = DATA.packs.reduce((a,p)=>a+p.subjects.length,0);
+  const items = [
+    [DATA.packs.length, '压缩包'],
+    [DATA.total_files, '个文件'],
+    [subjCount, '个学科'],
+    [fmtMB(tot), '总大小'],
+  ];
+  el.innerHTML = items.map(([v,k]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(k)}</span></div>`).join('');
+})();
+
+// 渲染三包
+const main = document.getElementById('main');
+DATA.packs.forEach((p, i) => {
+  const sec = document.createElement('section');
+  sec.className = 'pack';
+  sec.dataset.tag = p.tag;
+  sec.innerHTML =
+    '<div class="pack-head">' +
+      '<span class="pack-no">0' + (i+1) + '</span>' +
+      '<div class="pack-meta"><h2>' + esc(p.file) + '</h2>' +
+      '<p>' + p.count + ' 个文件 · ' + fmtMB(p.size) + ' · ' + p.subjects.length + ' 个学科</p></div>' +
+    '</div>' +
+    '<div class="subjects">' +
+    p.subjects.map(s =>
+      '<div class="subject open" data-subj="' + esc(s.name) + '">' +
+        '<button class="subject-head" type="button" aria-expanded="true">' +
+          '<span class="s-name">' + esc(s.name) + '</span>' +
+          '<span class="s-meta">' + s.count + ' 个 · ' + fmtMB(s.size) + '</span>' + CHEV +
+        '</button>' +
+        '<ul class="files">' +
+        s.files.map(f =>
+          '<li class="file" data-search="' + esc((s.name + ' ' + f.name).toLowerCase()) + '">' +
+            '<span class="f-name">' + esc(f.name) + '</span>' +
+            '<span class="f-size">' + fmtMB(f.size) + '</span>' +
+          '</li>').join('') +
+        '</ul>' +
+      '</div>').join('') +
+    '</div>';
+  main.appendChild(sec);
+});
+
+// 折叠
+document.addEventListener('click', e => {
+  const head = e.target.closest('.subject-head');
+  if (!head) return;
+  const subj = head.closest('.subject');
+  const open = subj.classList.toggle('open');
+  head.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+
+// 搜索
+const q = document.getElementById('q');
+const hint = document.getElementById('hint');
+let lastQuery = '';
+function applyFilter(){
+  const t = q.value.trim().toLowerCase();
+  document.body.classList.toggle('searching', !!t);
+  const subjGrids = main.querySelectorAll('.subjects');
+  let match = 0;
+  subjGrids.forEach(grid => {
+    grid.classList.toggle('filtering', !!t);
+    let visibleInGrid = 0;
+    grid.querySelectorAll('.subject').forEach(s => {
+      let vis = 0;
+      s.querySelectorAll('.file').forEach(f => {
+        const ok = !t || f.dataset.search.includes(t);
+        f.classList.toggle('hidden', !ok);
+        if (ok) vis++;
+      });
+      const show = !t || vis > 0;
+      s.classList.toggle('hidden', !show);
+      if (show) visibleInGrid++;
+    });
+    const pack = grid.closest('.pack');
+    pack.classList.toggle('hidden', !!t && visibleInGrid === 0);
+    match += visibleInGrid;
+  });
+  if (t) {
+    hint.textContent = '找到 ' + match + ' 个学科包含「' + q.value.trim() + '」';
+    hint.style.visibility = 'visible';
+  } else {
+    hint.textContent = '';
+  }
+}
+q.addEventListener('input', applyFilter);
+applyFilter();
+</script>
+</body>
+</html>
